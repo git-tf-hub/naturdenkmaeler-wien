@@ -2,10 +2,18 @@
 
 Interaktive Karte aller 762 Naturdenkmäler Wiens — im Vintage-Naturforscher-Look.
 
-## Öffnen
+## Online ansehen (Handy/iPhone)
+
+👉 **https://git-tf-hub.github.io/naturdenkmaeler-wien/**
+
+Am iPhone in Safari öffnen — und über Teilen → „Zum Home-Bildschirm" wie eine
+App ablegen.
+
+## Lokal öffnen
 
 Einfach `Naturdenkmäler Wien.html` doppelklicken — die Seite läuft direkt im Browser.
-(Internet wird benötigt, weil die Kartenkacheln von OpenStreetMap kommen.)
+(Internet wird benötigt, weil die Kartenkacheln aus dem Netz kommen — CARTO,
+basierend auf OpenStreetMap-Daten.)
 
 `Naturdenkmäler Wien.html` ist eine **Alles-in-einer-Datei**: Design, Skripte
 und alle 762 Daten stecken direkt drin. Du kannst sie verschieben, kopieren

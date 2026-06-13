@@ -4,6 +4,17 @@
 
 ## ✅ Fertig
 
+- **Online gestellt für iPhone — GitHub Pages** (NEU, 13.06.):
+  - Live: **https://git-tf-hub.github.io/naturdenkmaeler-wien/**
+    (am iPhone in Safari öffnen, optional „Zum Home-Bildschirm")
+  - Repo `git-tf-hub/naturdenkmaeler-wien` (öffentlich), Pages aus
+    `main`/Root, serviert die selbst-enthaltene `index.html`
+  - Build erzeugt `index.html` jetzt automatisch mit (in `baue-einzeldatei.py`)
+  - Mobil getestet (375px): Layout stapelt korrekt, CARTO-Kacheln laden,
+    keine Konsolen-Fehler
+  - Update-Weg: bauen → `git add -A && git commit && git push` → Pages
+    baut in ~1 Min neu (Details in CLAUDE.md)
+
 - **Kacheln von OSM auf CARTO Voyager umgestellt** (NEU, 13.06.):
   - Ursache eines „Access blocked — Referer is required"-Fehlers auf einem
     fremden Laptop: `tile.openstreetmap.org` blockt eingebettete/portable

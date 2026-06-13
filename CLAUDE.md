@@ -18,6 +18,21 @@ Interaktive Karten-Website (statisches HTML/CSS/JS, kein Build-Schritt).
   werden alle Änderungen gemacht
 - Nach jeder Änderung Einzeldatei neu bauen:
   `python3 werkzeuge/baue-einzeldatei.py`
+- Der Build erzeugt zugleich `index.html` (gleicher Inhalt, selbst-enthalten)
+  — das ist die Startseite der Online-Version.
+
+## Online-Version (GitHub Pages — fürs iPhone)
+
+- Live-Link: **https://git-tf-hub.github.io/naturdenkmaeler-wien/**
+  (am iPhone in Safari öffnen → Teilen → „Zum Home-Bildschirm" = app-artig)
+- Repo: `git-tf-hub/naturdenkmaeler-wien` (öffentlich), serviert `index.html`
+  aus dem `main`-Branch (Root). `Naturdenkmäler Wien.html` ist per
+  `.gitignore` ausgeschlossen (redundant zu index.html).
+- **Online aktualisieren** (nach Änderungen an css/js/data):
+  1. `python3 werkzeuge/baue-einzeldatei.py`  (baut index.html mit)
+  2. `git add -A && git commit -m "…" && git push`
+  3. Pages baut automatisch neu (~1 Min), Link bleibt gleich
+- Erfordert eingeloggte `gh`-CLI (Account `git-tf-hub`).
 
 ## Entdecker-Routen
 
