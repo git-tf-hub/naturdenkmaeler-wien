@@ -1,0 +1,885 @@
+/* =====================================================================
+   Naturdenkmäler Wien — Vintage-Naturforscher-Look mit Comic-Elementen
+   Farbwelt: gealtertes Papier, Tintenbraun, Waldgrün
+   ===================================================================== */
+
+:root {
+  --papier: #f4ecd9;
+  --papier-hell: #faf5e8;
+  --papier-dunkel: #e7d9ba;
+  --tinte: #3d2f1c;
+  --tinte-weich: #6f5d42;
+  --gruen: #3e7a3a;
+  --gruen-dunkel: #2d5a27;
+  --braun: #8b5e34;
+  --stempel-rot: #a4473a;
+
+  /* handgezeichnete, wacklige Ecken — das Comic-Geheimrezept */
+  --wackel-rund: 255px 18px 225px 18px / 18px 225px 18px 255px;
+  --wackel-rund-2: 18px 225px 18px 255px / 255px 18px 225px 18px;
+
+  --schrift-hand: 'Patrick Hand', 'Comic Sans MS', cursive;
+  --schrift-titel: 'Amatic SC', var(--schrift-hand);
+  --schrift-notiz: 'Caveat', var(--schrift-hand);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--schrift-hand);
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: var(--tinte);
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(255, 250, 235, 0.9), transparent 55%),
+    radial-gradient(ellipse at 110% 110%, rgba(150, 120, 70, 0.18), transparent 50%),
+    radial-gradient(ellipse at -10% 100%, rgba(120, 130, 70, 0.14), transparent 45%),
+    var(--papier);
+  min-height: 100vh;
+}
+
+/* Papierkorn über allem — rein dekorativ, blockiert keine Bedienung */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='k'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.24 0 0 0 0 0.18 0 0 0 0 0.11 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23k)'/%3E%3C/svg%3E");
+}
+
+/* --------------------------------------------------------------------
+   Kopfbereich
+   -------------------------------------------------------------------- */
+
+.kopf {
+  position: relative;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.2rem 1.2rem 0.6rem;
+  text-align: center;
+}
+
+/* dezente Doodles links und rechts vom Titel */
+.kopf::before,
+.kopf::after {
+  position: absolute;
+  font-size: 2.2rem;
+  opacity: 0.45;
+  pointer-events: none;
+}
+.kopf::before { content: '🍂'; left: 6%; top: 2.6rem; transform: rotate(-18deg); }
+.kopf::after { content: '🐿️'; right: 6%; top: 3.4rem; transform: rotate(12deg); }
+
+.titel {
+  margin: 0;
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: clamp(3rem, 9vw, 5.6rem);
+  line-height: 1.02;
+  letter-spacing: 0.04em;
+  animation: einschweben 0.7s ease-out both;
+}
+
+.titel .wort-natur { color: var(--gruen-dunkel); }
+.titel .wort-denkmal { color: var(--braun); }
+.titel .wort-wien {
+  color: var(--stempel-rot);
+  display: inline-block;
+  transform: rotate(-2deg);
+}
+
+.untertitel {
+  margin: 0.4rem 0 0;
+  font-family: var(--schrift-notiz);
+  font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+  color: var(--tinte-weich);
+  animation: einschweben 0.7s 0.15s ease-out both;
+}
+
+/* Stempel-Badge wie ein altes Wachssiegel */
+.stempel {
+  display: inline-block;
+  margin: 1rem auto 0;
+  padding: 0.55rem 1.1rem;
+  font-family: var(--schrift-titel);
+  font-size: 1.45rem;
+  letter-spacing: 0.08em;
+  color: var(--stempel-rot);
+  border: 2.5px dashed var(--stempel-rot);
+  border-radius: var(--wackel-rund-2);
+  transform: rotate(-3deg);
+  background: rgba(164, 71, 58, 0.07);
+  animation: einstempeln 0.5s 0.35s cubic-bezier(0.2, 2.2, 0.4, 1) both;
+}
+
+/* geschwungene Trennlinie */
+.trenner {
+  display: block;
+  width: min(420px, 70%);
+  margin: 1rem auto 0;
+  color: var(--braun);
+  opacity: 0.75;
+}
+
+/* --------------------------------------------------------------------
+   Notizzettel (Einleitung)
+   -------------------------------------------------------------------- */
+
+main {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1.2rem;
+}
+
+/* Bei 3 Spalten darf die Seite breiter werden — mehr Platz für die Karte */
+@media (min-width: 1280px) {
+  main { max-width: 1560px; }
+}
+
+.notiz {
+  position: relative;
+  max-width: 660px;
+  margin: 1.4rem auto 1.8rem;
+  padding: 1.1rem 1.5rem;
+  font-family: var(--schrift-notiz);
+  font-size: clamp(1.25rem, 3vw, 1.45rem);
+  line-height: 1.45;
+  text-align: center;
+  color: var(--tinte);
+  background: var(--papier-hell);
+  border: 2px solid var(--tinte);
+  border-radius: var(--wackel-rund);
+  box-shadow: 4px 5px 0 rgba(61, 47, 28, 0.18);
+  transform: rotate(-0.6deg);
+}
+
+/* zwei Klebestreifen wie im Skizzenbuch */
+.notiz::before,
+.notiz::after {
+  content: '';
+  position: absolute;
+  width: 92px;
+  height: 26px;
+  background: rgba(201, 162, 39, 0.4);
+  border-left: 1px dashed rgba(61, 47, 28, 0.25);
+  border-right: 1px dashed rgba(61, 47, 28, 0.25);
+}
+.notiz::before { top: -13px; left: 8%; transform: rotate(-7deg); }
+.notiz::after { bottom: -13px; right: 8%; transform: rotate(5deg); }
+
+/* --------------------------------------------------------------------
+   Karte + Legende
+   -------------------------------------------------------------------- */
+
+/* Schmale Bildschirme: alles untereinander — Karte, Routen, Legende */
+.karten-bereich {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'karte'
+    'routen'
+    'legende';
+  gap: 1.4rem;
+  align-items: start;
+  margin-bottom: 2rem;
+}
+
+.karten-rahmen { grid-area: karte; }
+.routen-box { grid-area: routen; }
+.legende { grid-area: legende; }
+
+/* Mittlere Breite: Karte links, rechts Routenplaner oben + Legende darunter */
+@media (min-width: 1000px) {
+  .karten-bereich {
+    grid-template-columns: 1fr 290px;
+    grid-template-areas:
+      'karte routen'
+      'karte legende';
+  }
+}
+
+/* Große Bildschirme: Routenplaner links, Karte mittig, Legende rechts.
+   Die Seitenspalten kleben und scrollen bei Überlänge intern. */
+@media (min-width: 1280px) {
+  .karten-bereich {
+    /* Legende so schmal wie möglich (230px) — mehr Platz für die Karte */
+    grid-template-columns: 290px 1fr 230px;
+    grid-template-areas: 'routen karte legende';
+  }
+
+  .routen-box,
+  .legende {
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--tinte-weich) transparent;
+  }
+}
+
+.karten-rahmen {
+  padding: 10px;
+  background: var(--papier-dunkel);
+  border: 3px solid var(--tinte);
+  border-radius: var(--wackel-rund);
+  box-shadow: 6px 7px 0 rgba(61, 47, 28, 0.22);
+}
+
+#karte {
+  height: clamp(420px, 64vh, 740px);
+  border: 2px solid var(--tinte);
+  border-radius: 14px 6px 16px 6px / 6px 16px 6px 14px;
+  background: var(--papier-dunkel);
+}
+
+@media (min-width: 1280px) {
+  /* Karte reicht genauso weit nach unten wie Planer und Legende
+     (deren Sticky-Deckel ist ebenfalls 100vh − 2rem) */
+  #karte { height: max(520px, calc(100vh - 2rem)); }
+}
+
+@media (max-width: 600px) {
+  #karte { height: clamp(360px, 58vh, 560px); }
+}
+
+/* Vintage-Färbung der Kartenkacheln */
+.leaflet-tile {
+  filter: sepia(0.42) saturate(0.75) hue-rotate(-8deg) brightness(1.04) contrast(0.92);
+}
+
+/* --------------------------------------------------------------------
+   Marker & Cluster (Comic-Stil)
+   -------------------------------------------------------------------- */
+
+.nd-marker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  font-size: 21px;
+  background: var(--papier-hell);
+  border: 2.5px solid var(--kat-farbe, var(--gruen));
+  border-radius: 60% 40% 55% 45% / 45% 55% 40% 60%;
+  box-shadow: 2px 3px 0 rgba(61, 47, 28, 0.35);
+  transition: transform 0.15s ease-out;
+  cursor: pointer;
+}
+
+.nd-marker-huelle:hover .nd-marker,
+.nd-marker-huelle:focus .nd-marker {
+  transform: scale(1.18) rotate(-6deg);
+}
+
+.nd-cluster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  color: var(--tinte);
+  background: var(--papier-hell);
+  border: 2.5px solid var(--gruen-dunkel);
+  outline: 2px dashed rgba(45, 90, 39, 0.55);
+  outline-offset: 3px;
+  border-radius: 55% 45% 50% 50% / 50% 50% 45% 55%;
+  box-shadow: 2px 3px 0 rgba(61, 47, 28, 0.3);
+  cursor: pointer;
+}
+
+.nd-cluster span { font-size: 19px; line-height: 1; }
+.nd-cluster-mittel { border-color: var(--braun); outline-color: rgba(139, 94, 52, 0.55); }
+.nd-cluster-mittel span { font-size: 21px; }
+.nd-cluster-gross { border-color: var(--stempel-rot); outline-color: rgba(164, 71, 58, 0.5); }
+.nd-cluster-gross span { font-size: 23px; }
+
+/* --------------------------------------------------------------------
+   Popups (Sprechblasen)
+   -------------------------------------------------------------------- */
+
+.leaflet-popup-content-wrapper {
+  background: var(--papier-hell);
+  color: var(--tinte);
+  border: 2.5px solid var(--tinte);
+  border-radius: 18px 8px 20px 8px / 8px 20px 8px 18px;
+  box-shadow: 4px 5px 0 rgba(61, 47, 28, 0.25);
+  font-family: var(--schrift-hand);
+}
+
+.leaflet-popup-tip {
+  background: var(--papier-hell);
+  border: 2px solid var(--tinte);
+  box-shadow: none;
+}
+
+.leaflet-popup-content { margin: 12px 16px; line-height: 1.45; }
+
+.leaflet-popup-close-button {
+  font-size: 22px !important;
+  color: var(--tinte-weich) !important;
+  padding: 6px 8px 0 0 !important;
+}
+
+.popup-titel {
+  margin: 0 0 0.2rem;
+  font-family: var(--schrift-titel);
+  font-size: 1.7rem;
+  line-height: 1.05;
+  color: var(--gruen-dunkel);
+}
+
+.popup-emoji { font-size: 1.4rem; margin-right: 0.15rem; }
+
+.popup-kategorie {
+  display: inline-block;
+  margin: 0 0 0.4rem;
+  padding: 0.05rem 0.6rem;
+  font-size: 0.95rem;
+  color: var(--tinte);
+  border: 1.5px solid var(--kat-farbe, var(--gruen));
+  background: color-mix(in srgb, var(--kat-farbe, var(--gruen)) 16%, transparent);
+  border-radius: var(--wackel-rund-2);
+  transform: rotate(-1deg);
+}
+
+.popup-ort { margin: 0 0 0.4rem; color: var(--tinte-weich); font-size: 1rem; }
+
+.popup-kurzinfo { margin: 0 0 0.4rem; }
+
+.mehr-knopf {
+  display: inline-block;
+  margin: 0.25rem 0 0.1rem;
+  padding: 0.3rem 0.9rem;
+  font-family: var(--schrift-hand);
+  font-size: 1.02rem;
+  color: var(--papier-hell);
+  background: var(--gruen);
+  border: 2px solid var(--tinte);
+  border-radius: var(--wackel-rund-2);
+  box-shadow: 2px 3px 0 rgba(61, 47, 28, 0.35);
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+.mehr-knopf:hover,
+.mehr-knopf:focus-visible {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 2px 0 rgba(61, 47, 28, 0.35);
+}
+
+.mehr-knopf:focus-visible { outline: 3px dashed var(--gruen-dunkel); outline-offset: 2px; }
+
+.popup-details {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 2px dashed rgba(61, 47, 28, 0.3);
+  font-size: 1rem;
+  max-height: 180px; /* lange Texte scrollen, statt das Popup zu sprengen */
+  overflow-y: auto;
+  animation: aufklappen 0.25s ease-out;
+}
+
+.popup-details p { margin: 0 0 0.45rem; }
+
+.detail-label { color: var(--tinte-weich); }
+
+.detail-nummer {
+  font-size: 0.85rem;
+  color: var(--tinte-weich);
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------------
+   Legende
+   -------------------------------------------------------------------- */
+
+.legende {
+  background: var(--papier-hell);
+  border: 2.5px solid var(--tinte);
+  border-radius: var(--wackel-rund);
+  box-shadow: 5px 6px 0 rgba(61, 47, 28, 0.2);
+  padding: 0.4rem 0.9rem 0.9rem;
+  transform: rotate(0.4deg);
+}
+
+
+.legende summary {
+  font-family: var(--schrift-titel);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--braun);
+  cursor: pointer;
+  padding: 0.4rem 0.2rem;
+  list-style-position: outside;
+}
+
+.legende summary:focus-visible { outline: 3px dashed var(--gruen-dunkel); outline-offset: 2px; }
+
+.legende-hinweis {
+  margin: 0 0 0.5rem;
+  font-family: var(--schrift-notiz);
+  font-size: 1.15rem;
+  color: var(--tinte-weich);
+}
+
+#legende-liste { display: flex; flex-direction: column; gap: 0.3rem; }
+
+.legende-zeile {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  min-height: 44px; /* gut antippbar am Handy */
+  padding: 0.25rem 0.6rem;
+  font-family: var(--schrift-hand);
+  font-size: 1.05rem;
+  text-align: left;
+  color: var(--tinte);
+  background: color-mix(in srgb, var(--kat-farbe, var(--gruen)) 10%, transparent);
+  border: 2px solid var(--kat-farbe, var(--gruen));
+  border-radius: 14px 5px 14px 5px / 5px 14px 5px 14px;
+  cursor: pointer;
+  transition: transform 0.12s, opacity 0.15s;
+}
+
+.legende-zeile:hover { transform: translateX(3px) rotate(-0.4deg); }
+.legende-zeile:focus-visible { outline: 3px dashed var(--gruen-dunkel); outline-offset: 2px; }
+
+.legende-zeile.aus {
+  opacity: 0.45;
+  background: transparent;
+  border-style: dashed;
+}
+
+.legende-zeile.aus .legende-label { text-decoration: line-through; }
+
+.legende-emoji { font-size: 1.35rem; }
+
+.legende-label { flex: 1; }
+
+.legende-anzahl {
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--kat-farbe, var(--gruen));
+  min-width: 2.1rem;
+  text-align: right;
+}
+
+#legende-reset {
+  margin-top: 0.7rem;
+  width: 100%;
+  padding: 0.45rem;
+  font-family: var(--schrift-hand);
+  font-size: 1.05rem;
+  color: var(--papier-hell);
+  background: var(--braun);
+  border: 2px solid var(--tinte);
+  border-radius: var(--wackel-rund-2);
+  box-shadow: 2px 3px 0 rgba(61, 47, 28, 0.3);
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+#legende-reset:hover,
+#legende-reset:focus-visible {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 2px 0 rgba(61, 47, 28, 0.3);
+}
+
+#legende-reset:focus-visible { outline: 3px dashed var(--gruen-dunkel); outline-offset: 2px; }
+
+.legende-cluster-hinweis {
+  margin: 0.8rem 0 0;
+  font-family: var(--schrift-notiz);
+  font-size: 1.1rem;
+  color: var(--tinte-weich);
+  border-top: 2px dashed rgba(61, 47, 28, 0.25);
+  padding-top: 0.6rem;
+}
+
+/* --------------------------------------------------------------------
+   Entdecker-Routen (Knopf, Panel, Flaggen, Stationen)
+   -------------------------------------------------------------------- */
+
+.routen-box {
+  background: var(--papier-hell);
+  border: 2.5px solid var(--tinte);
+  border-radius: var(--wackel-rund-2);
+  box-shadow: 5px 6px 0 rgba(61, 47, 28, 0.2);
+  padding: 0.8rem 0.9rem 0.9rem;
+  transform: rotate(-0.4deg);
+}
+
+.routen-titel {
+  margin: 0 0 0.3rem;
+  font-family: var(--schrift-titel);
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--stempel-rot);
+}
+
+.routen-hinweis {
+  margin: 0 0 0.7rem;
+  font-family: var(--schrift-notiz);
+  font-size: 1.15rem;
+  color: var(--tinte-weich);
+}
+
+#route-knopf {
+  width: 100%;
+  padding: 0.55rem;
+  font-family: var(--schrift-hand);
+  font-size: 1.15rem;
+  color: var(--papier-hell);
+  background: var(--stempel-rot);
+  border: 2px solid var(--tinte);
+  border-radius: var(--wackel-rund-2);
+  box-shadow: 2px 3px 0 rgba(61, 47, 28, 0.3);
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+#route-knopf:hover,
+#route-knopf:focus-visible {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 2px 0 rgba(61, 47, 28, 0.3);
+}
+
+#route-knopf:focus-visible { outline: 3px dashed var(--stempel-rot); outline-offset: 2px; }
+
+.routen-panel {
+  margin-top: 0.8rem;
+  padding-top: 0.6rem;
+  border-top: 2px dashed rgba(61, 47, 28, 0.3);
+  animation: aufklappen 0.25s ease-out;
+}
+
+.routen-zaehler {
+  margin: 0;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tinte-weich);
+}
+
+.routen-name {
+  margin: 0.1rem 0 0.2rem;
+  font-family: var(--schrift-titel);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--gruen-dunkel);
+}
+
+.routen-gegend {
+  margin: 0 0 0.4rem;
+  font-family: var(--schrift-notiz);
+  font-size: 1.1rem;
+  color: var(--braun);
+}
+
+.routen-beschreibung { margin: 0 0 0.5rem; font-size: 1.02rem; }
+
+.routen-fakten {
+  margin: 0 0 0.3rem;
+  font-size: 1rem;
+  color: var(--tinte);
+}
+
+.routen-oeffi {
+  margin: 0 0 0.6rem;
+  font-size: 0.98rem;
+  color: var(--tinte-weich);
+}
+
+.routen-stempel {
+  margin: 0.3rem 0 0.6rem;
+  padding: 0.35rem 0.7rem;
+  font-family: var(--schrift-titel);
+  font-size: 1.5rem;
+  text-align: center;
+  color: var(--stempel-rot);
+  border: 2.5px dashed var(--stempel-rot);
+  border-radius: var(--wackel-rund-2);
+  transform: rotate(-2deg);
+  animation: einstempeln 0.3s ease-out;
+}
+
+.routen-liste {
+  margin: 0 0 0.7rem;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.routen-eintrag {
+  display: flex;
+  align-items: stretch;
+  gap: 0.4rem;
+}
+
+.routen-haken {
+  display: flex;
+  align-items: center;
+  padding: 0 0.15rem;
+  cursor: pointer;
+}
+
+.routen-haken input {
+  width: 19px;
+  height: 19px;
+  accent-color: var(--gruen);
+  cursor: pointer;
+}
+
+.routen-eintrag-knopf {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px; /* gut antippbar am Handy */
+  padding: 0.3rem 0.5rem;
+  font-family: var(--schrift-hand);
+  font-size: 1rem;
+  text-align: left;
+  color: var(--tinte);
+  background: color-mix(in srgb, var(--stempel-rot) 7%, transparent);
+  border: 2px solid color-mix(in srgb, var(--stempel-rot) 55%, transparent);
+  border-radius: 14px 5px 14px 5px / 5px 14px 5px 14px;
+  cursor: pointer;
+  transition: transform 0.12s;
+}
+
+.routen-eintrag-knopf:hover { transform: translateX(3px) rotate(-0.4deg); }
+.routen-eintrag-knopf:focus-visible { outline: 3px dashed var(--stempel-rot); outline-offset: 2px; }
+
+.routen-nummer {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--papier-hell);
+  background: var(--stempel-rot);
+  border-radius: 55% 45% 50% 50% / 50% 50% 45% 55%;
+}
+
+.routen-eintrag-text { display: flex; flex-direction: column; line-height: 1.25; }
+
+.routen-eintrag-adresse { font-size: 0.88rem; color: var(--tinte-weich); }
+
+.routen-gruppe { font-size: 0.88rem; color: var(--tinte-weich); }
+
+.routen-eintrag.erledigt .routen-eintrag-knopf { opacity: 0.55; }
+.routen-eintrag.erledigt .routen-eintrag-name { text-decoration: line-through; }
+
+.routen-aktionen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.routen-aktionen button {
+  flex: 1 1 45%;
+  padding: 0.4rem 0.3rem;
+  font-family: var(--schrift-hand);
+  font-size: 0.98rem;
+  color: var(--tinte);
+  background: var(--papier-dunkel);
+  border: 2px solid var(--tinte);
+  border-radius: var(--wackel-rund-2);
+  box-shadow: 2px 3px 0 rgba(61, 47, 28, 0.25);
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+.routen-aktionen button:hover,
+.routen-aktionen button:focus-visible {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 2px 0 rgba(61, 47, 28, 0.25);
+}
+
+.routen-aktionen button:focus-visible { outline: 3px dashed var(--gruen-dunkel); outline-offset: 2px; }
+
+/* Flaggen auf der Karte */
+.routen-flagge {
+  font-size: 30px;
+  line-height: 1;
+  filter: drop-shadow(2px 2px 0 rgba(61, 47, 28, 0.35));
+  animation: flaggen-pop 0.35s ease-out;
+  transform-origin: bottom left;
+}
+
+@keyframes flaggen-pop {
+  from { transform: scale(0); }
+  60% { transform: scale(1.25) rotate(-8deg); }
+  to { transform: scale(1); }
+}
+
+/* Richtungspfeile auf der Routen-Linie */
+.routen-pfeil-huelle { pointer-events: none; }
+
+.routen-pfeil {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--stempel-rot);
+  /* heller Hof, damit der Pfeil auf der gestrichelten Linie lesbar bleibt */
+  text-shadow:
+    0 0 2px var(--papier-hell),
+    0 0 3px var(--papier-hell),
+    0 0 5px var(--papier-hell);
+}
+
+/* Nummerierte Stationen auf der Karte */
+.routen-station {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  font-family: var(--schrift-titel);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--papier-hell);
+  background: var(--stempel-rot);
+  border: 2px solid var(--papier-hell);
+  border-radius: 55% 45% 50% 50% / 50% 50% 45% 55%;
+  box-shadow: 2px 3px 0 rgba(61, 47, 28, 0.35);
+  cursor: pointer;
+  animation: flaggen-pop 0.3s ease-out;
+  transform-origin: center;
+}
+
+.routen-station-huelle:hover .routen-station { transform: scale(1.2); }
+
+/* Druckansicht: nur das Routen-Panel aufs Papier */
+@media print {
+  body.routen-druck header,
+  body.routen-druck .notiz,
+  body.routen-druck .karten-rahmen,
+  body.routen-druck .legende,
+  body.routen-druck .fuss,
+  body.routen-druck .routen-hinweis,
+  body.routen-druck #route-knopf,
+  body.routen-druck .routen-aktionen { display: none !important; }
+
+  body.routen-druck { background: white; }
+
+  body.routen-druck .karten-bereich { display: block; }
+
+  body.routen-druck .routen-box {
+    border: none;
+    box-shadow: none;
+    transform: none;
+    background: white;
+    padding: 0;
+    position: static;
+    max-height: none;   /* sonst schneidet der interne Scroll die Druckliste ab */
+    overflow: visible;
+  }
+
+  body.routen-druck .routen-panel { border-top: none; }
+
+  body.routen-druck .routen-eintrag-knopf {
+    background: white;
+    border-color: #999;
+  }
+
+  body.routen-druck .routen-nummer,
+  body.routen-druck .routen-station { background: #555; color: white; }
+}
+
+/* --------------------------------------------------------------------
+   Leaflet-Bedienelemente im Papier-Look
+   -------------------------------------------------------------------- */
+
+.leaflet-control-zoom a {
+  background: var(--papier-hell) !important;
+  color: var(--tinte) !important;
+  border: 2px solid var(--tinte) !important;
+  font-family: var(--schrift-hand);
+}
+
+.leaflet-control-zoom a:hover { background: var(--papier-dunkel) !important; }
+
+.leaflet-control-attribution {
+  background: rgba(250, 245, 232, 0.85) !important;
+  color: var(--tinte-weich) !important;
+  font-size: 10px !important;
+}
+
+.leaflet-control-attribution a { color: var(--gruen-dunkel) !important; }
+
+/* --------------------------------------------------------------------
+   Fußzeile
+   -------------------------------------------------------------------- */
+
+.fuss {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.6rem 1.2rem 2.2rem;
+  text-align: center;
+  font-family: var(--schrift-notiz);
+  font-size: 1.15rem;
+  color: var(--tinte-weich);
+}
+
+.fuss a { color: var(--gruen-dunkel); text-decoration-style: wavy; text-underline-offset: 3px; }
+
+.fuss a:hover { color: var(--stempel-rot); }
+
+/* --------------------------------------------------------------------
+   Animationen
+   -------------------------------------------------------------------- */
+
+@keyframes einschweben {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes einstempeln {
+  from { opacity: 0; transform: rotate(-3deg) scale(1.6); }
+  to { opacity: 1; transform: rotate(-3deg) scale(1); }
+}
+
+@keyframes aufklappen {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* --------------------------------------------------------------------
+   Kleine Bildschirme
+   -------------------------------------------------------------------- */
+
+@media (max-width: 600px) {
+  .kopf::before, .kopf::after { display: none; }
+  .notiz { padding: 0.9rem 1rem; }
+  .karten-rahmen { padding: 6px; box-shadow: 4px 5px 0 rgba(61, 47, 28, 0.22); }
+}

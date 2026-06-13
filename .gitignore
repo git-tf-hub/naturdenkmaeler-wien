@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Claude-/Editor-interne Dateien
+.claude/
+
+# Portable Einzeldatei: lokal nützlich, aber redundant zu index.html
+# (gleicher Inhalt). Wird per Build erzeugt, nicht versioniert.
+/Naturdenkmäler Wien.html

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Naturdenkmäler Wien 🌳 — Die Schatzkarte der Natur</title>
+  <meta name="description" content="Interaktive Karte aller Naturdenkmäler Wiens — alte Bäume, Alleen, Felsen und Gewässer zum Entdecken.">
+  <!-- iPhone/Mobil: Browserleisten-Farbe + Name beim „Zum Home-Bildschirm" -->
+  <meta name="theme-color" content="#3e7a3a">
+  <meta name="apple-mobile-web-app-title" content="Naturdenkmäler">
+  <link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;🌳&lt;/text&gt;&lt;/svg&gt;">
+
+  <!-- Schriften: Amatic SC (Titel), Patrick Hand (Text), Caveat (Notizen) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&family=Caveat:wght@600&family=Patrick+Hand&display=swap" rel="stylesheet">
+
+  <!-- Leaflet (Karte) + MarkerCluster (Gruppierung) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="kopf">
+    <h1 class="titel">
+      <span class="wort-natur">🌿 Natur</span><span class="wort-denkmal">denkmäler</span>
+      <span class="wort-wien">Wien</span> 🗺️
+    </h1>
+    <p class="untertitel">Eine Schatzkarte der Natur — von Donaustadt bis Liesing</p>
+    <p class="stempel">★ <span id="anzahl-denkmaeler">…</span> Naturschätze entdeckt ★</p>
+    <svg class="trenner" viewBox="0 0 420 16" aria-hidden="true">
+      <path d="M2 8 Q 30 1, 60 8 T 118 8 T 176 8 T 234 8 T 292 8 T 350 8 T 418 8"
+            fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+  </header>
+
+  <main>
+    <section class="notiz">
+      Wien schützt seine grünen Schätze! 🧭 Uralte Bäume, schattige Alleen,
+      geheimnisvolle Felsen und stille Teiche — klick dich durch die Karte
+      und lass dir ihre Geschichten erzählen.
+    </section>
+
+    <section class="karten-bereich" aria-label="Karte und Legende">
+      <div class="karten-rahmen">
+        <div id="karte" aria-label="Interaktive Karte der Naturdenkmäler Wiens"></div>
+      </div>
+
+      <aside class="routen-box" aria-label="Spazier-Routen">
+        <h2 class="routen-titel">🥾 Entdecker-Routen</h2>
+        <p class="routen-hinweis">
+          Lust auf eine Expedition? Jede Route ist in 1–2 Stunden
+          zu Fuß abzugehen — kurze Stopps an jedem Naturdenkmal inklusive.
+        </p>
+        <button type="button" id="route-knopf">🥾 Route generieren</button>
+
+        <section id="routen-panel" class="routen-panel" aria-live="polite" hidden>
+          <p id="routen-zaehler" class="routen-zaehler"></p>
+          <h3 id="routen-name" class="routen-name"></h3>
+          <p id="routen-gegend" class="routen-gegend"></p>
+          <p id="routen-beschreibung" class="routen-beschreibung"></p>
+          <p id="routen-fakten" class="routen-fakten"></p>
+          <p id="routen-oeffi" class="routen-oeffi"></p>
+          <div id="routen-stempel" class="routen-stempel" hidden>★ Expedition abgeschlossen! ★</div>
+          <ol id="routen-liste" class="routen-liste"></ol>
+          <div class="routen-aktionen">
+            <button type="button" id="route-kopieren">📋 Als Text kopieren</button>
+            <button type="button" id="route-drucken">🖨️ Liste drucken</button>
+            <button type="button" id="route-ausblenden">Route ausblenden 🙈</button>
+          </div>
+        </section>
+      </aside>
+
+      <aside class="legende">
+        <details open>
+          <summary>🗺️ Legende</summary>
+          <p class="legende-hinweis">Tippe auf eine Kategorie, um sie ein- oder auszublenden:</p>
+          <div id="legende-liste"></div>
+          <button type="button" id="legende-reset">Alle wieder zeigen ✨</button>
+          <p class="legende-cluster-hinweis">
+            💡 Kreise mit Zahlen fassen mehrere Denkmäler zusammen — antippen zum Hineinzoomen!
+          </p>
+        </details>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="fuss">
+    <p>
+      Datenquelle: <a href="https://www.data.gv.at/datasets/383408d4-89b8-42df-af53-5c89f91e0cc7?locale=de">Stadt Wien — data.gv.at</a> (CC BY 4.0)
+      · Mehr erfahren: <a href="https://www.wien.gv.at/umwelt/naturdenkmaeler">wien.gv.at/umwelt/naturdenkmaeler</a>
+    </p>
+    <p>Mit 💚 gezeichnet für alle Naturentdeckerinnen und Naturentdecker</p>
+  </footer>
+
+  <noscript>
+    <p style="text-align:center; padding: 1rem;">
+      Diese Karte braucht JavaScript — bitte im Browser aktivieren. 🌳
+    </p>
+  </noscript>
+
+  <!-- Bibliotheken -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+
+  <!-- Daten (hier neue Datenquellen einbinden) -->
+  <script src="data/naturdenkmaeler-wien.js"></script>
+  <script src="data/eigene-daten.js"></script>
+  <script src="data/routen.js"></script>
+
+  <!-- App-Module -->
+  <script src="js/config.js"></script>
+  <script src="js/kategorien.js"></script>
+  <script src="js/datenlader.js"></script>
+  <script src="js/karte.js"></script>
+  <script src="js/legende.js"></script>
+  <script src="js/routen.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
