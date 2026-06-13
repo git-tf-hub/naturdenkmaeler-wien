@@ -4,6 +4,12 @@
 
 ## ✅ Fertig
 
+- **Karte füllt am Handy mehr Bildschirm** (NEU, 13.06.):
+  - Mobil von `58vh` (max 560px) auf `80dvh` (max 920px) erhöht; `dvh`
+    statt `vh` → passt sich der echten sichtbaren Höhe an (Safari-Leiste,
+    je nach Handy-Typ). Basis-Höhe ebenfalls auf `dvh` mit vh-Fallback.
+  - Getestet: SE 534px · 375×812 650px · Pro Max 746px = überall ~80%
+
 - **Online gestellt für iPhone — GitHub Pages** (NEU, 13.06.):
   - Live: **https://git-tf-hub.github.io/naturdenkmaeler-wien/**
     (am iPhone in Safari öffnen, optional „Zum Home-Bildschirm")

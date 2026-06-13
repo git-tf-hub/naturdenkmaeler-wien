@@ -261,7 +261,8 @@ main {
 }
 
 #karte {
-  height: clamp(420px, 64vh, 740px);
+  height: clamp(420px, 64vh, 740px);   /* Fallback für ältere Browser */
+  height: clamp(420px, 64dvh, 740px);  /* dvh = echte sichtbare Höhe am Handy */
   border: 2px solid var(--tinte);
   border-radius: 14px 6px 16px 6px / 6px 16px 6px 14px;
   background: var(--papier-dunkel);
@@ -274,7 +275,10 @@ main {
 }
 
 @media (max-width: 600px) {
-  #karte { height: clamp(360px, 58vh, 560px); }
+  /* Karte füllt am Handy den Großteil des Bildschirms. dvh passt sich der
+     echten sichtbaren Höhe an — also je nach Handy-Typ und Safari-Leiste */
+  #karte { height: clamp(440px, 80vh, 920px); }   /* Fallback */
+  #karte { height: clamp(440px, 80dvh, 920px); }
 }
 
 /* Vintage-Färbung der Kartenkacheln */
