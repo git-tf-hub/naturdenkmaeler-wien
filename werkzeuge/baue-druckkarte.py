@@ -122,12 +122,11 @@ HTML = r"""<!DOCTYPE html>
     }
 
     .fuss{
-      margin-top:auto; width:100%; display:flex; justify-content:space-between;
+      margin-top:auto; width:100%; display:flex; justify-content:center;
       align-items:flex-end; gap:8mm; font-size:16px; color:var(--tinte-weich);
       padding-top:8mm; border-top:2px dotted rgba(61,47,28,.35);
     }
-    .fuss span{ flex:1; }
-    .fuss .quelle{ text-align:right; }
+    .fuss .quelle{ text-align:center; }
 
     /* Bildschirm-Vorschau: Blatt zentriert mit Schatten */
     @media screen{
@@ -156,7 +155,6 @@ HTML = r"""<!DOCTYPE html>
     </p>
 
     <div class="fuss">
-      <span>📱 Tipp: am iPhone über „Teilen → Zum Home-Bildschirm" wie eine App ablegen.</span>
       <span class="quelle">Daten: Stadt Wien · CC&nbsp;BY&nbsp;4.0</span>
     </div>
   </div>
