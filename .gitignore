@@ -7,3 +7,7 @@
 # Portable Einzeldatei: lokal nützlich, aber redundant zu index.html
 # (gleicher Inhalt). Wird per Build erzeugt, nicht versioniert.
 /Naturdenkmäler Wien.html
+
+# Druck-Asset (A4 mit QR-Code) — lokal zum Drucken, gehört nicht auf die
+# Website. Wird erzeugt mit werkzeuge/baue-druckkarte.py
+/druckkarte.html

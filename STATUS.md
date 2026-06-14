@@ -4,6 +4,15 @@
 
 ## ✅ Fertig
 
+- **A4-Druckkarte mit QR-Code** (NEU, 14.06.):
+  - `druckkarte.html` = druckfertige A4-Seite (Vintage-Stil) mit QR-Code
+    zum Online-Link; QR als Inline-SVG (scharf, offline)
+  - Erzeugt mit `werkzeuge/baue-druckkarte.py` (braucht
+    `/usr/local/bin/python3` + `pip install segno`)
+  - QR unabhängig per jsQR dekodiert → zeigt korrekt auf den Pages-Link
+  - `druckkarte.html` ist gitignored (lokales Print-Asset, nicht auf der
+    Website); Drucken: Datei öffnen → ⌘P → A4
+
 - **Art-Steckbriefe bei „Erzähl mir mehr"** (NEU, 14.06.):
   - Statt des immer gleichen Kategorie-Satzes zeigt jeder Baum jetzt einen
     echten botanischen Steckbrief seiner Art (`data/art-infos.js`, ~90 Arten,
