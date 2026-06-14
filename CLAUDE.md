@@ -34,6 +34,19 @@ Interaktive Karten-Website (statisches HTML/CSS/JS, kein Build-Schritt).
   3. Pages baut automatisch neu (~1 Min), Link bleibt gleich
 - Erfordert eingeloggte `gh`-CLI (Account `git-tf-hub`).
 
+## Art-Steckbriefe ("Erzähl mir mehr")
+
+- `data/art-infos.js` = echte botanische Kurztexte PRO BAUMART (~90 Arten),
+  Schlüssel = wiss. Name klein (`"quercus robur"`, Gattung als Rückfall
+  `"quercus"`, Zuchtform `"fagus sylvatica pendula"`).
+- Zuordnung: `artInfoFuer(wissName)` in `js/kategorien.js` (Sorte → Art →
+  Gattung). Treffer ersetzt im Popup den Kategorie-Text; kein Treffer (Art
+  `-`/leer, also Felsen/Gewässer/Wiese/Lebensraum) → Kategorie-Text als
+  Rückfall. Deckung aktuell 655/762 (86 %).
+- **Bewusst NICHT pro Einzelbaum**: der Stadt-Wien-Datensatz hat keine
+  Einzelbaum-Geschichten — erfundene Fakten gehören nicht in die Karte.
+  Neue Art ergänzen → einfach Eintrag in `data/art-infos.js`.
+
 ## Entdecker-Routen
 
 - 10 vorgespeicherte Spazier-Routen (`data/routen.js`) mit echten

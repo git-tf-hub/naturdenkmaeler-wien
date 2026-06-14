@@ -89,6 +89,27 @@ function kategorieFuer(typ) {
   return KATEGORIEN[typ] || KATEGORIEN['Sonstiges'];
 }
 
+// Liefert den Art-Steckbrief (aus data/art-infos.js) zum wissenschaftlichen
+// Namen. Versucht der Reihe nach: Gattung+Art+Sorte → Gattung+Art → Gattung.
+// Liefert '' wenn nichts passt (dann zeigt das Popup den Kategorie-Text).
+function artInfoFuer(wissName) {
+  if (!wissName || typeof ART_INFOS === 'undefined') return '';
+  const woerter = wissName
+    .toLowerCase()
+    .replace(/[^a-zäöü\s]/g, ' ')      // Anführungszeichen, Backslash, Ziffern raus
+    .split(/\s+/)
+    .filter((w) => w && !['x', 'var', 'ssp', 'spec', 'spp'].includes(w));
+  if (!woerter.length) return '';
+  const kandidaten = [];
+  if (woerter.length >= 3) kandidaten.push(woerter.slice(0, 3).join(' '));
+  if (woerter.length >= 2) kandidaten.push(woerter.slice(0, 2).join(' '));
+  kandidaten.push(woerter[0]);
+  for (const schluessel of kandidaten) {
+    if (ART_INFOS[schluessel]) return ART_INFOS[schluessel];
+  }
+  return '';
+}
+
 // Wiener Bezirke (Nummer → Name)
 const BEZIRKE = {
   1: 'Innere Stadt', 2: 'Leopoldstadt', 3: 'Landstraße', 4: 'Wieden',

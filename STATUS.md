@@ -4,6 +4,17 @@
 
 ## ✅ Fertig
 
+- **Art-Steckbriefe bei „Erzähl mir mehr"** (NEU, 14.06.):
+  - Statt des immer gleichen Kategorie-Satzes zeigt jeder Baum jetzt einen
+    echten botanischen Steckbrief seiner Art (`data/art-infos.js`, ~90 Arten,
+    z. B. Ginkgo = lebendes Fossil, Mammutbaum = größter Baum der Welt)
+  - Zuordnung über `artInfoFuer()` in `js/kategorien.js` (Sorte→Art→Gattung,
+    inkl. Zuchtformen wie Blutbuche/Trauerbuche); Rückfall = Kategorie-Text
+  - Deckung 655/762 (86 %); die restlichen 107 sind Nicht-Bäume (Felsen,
+    Gewässer, Wiese, Lebensraum) ohne Art → korrekt Kategorie-Text
+  - Bewusst NICHT pro Einzelbaum erfunden (Datensatz gibt das nicht her)
+  - Geprüft: Logik über alle 762 Einträge + Popup visuell (Ginkgo)
+
 - **Karte füllt am Handy mehr Bildschirm** (NEU, 13.06.):
   - Mobil von `58vh` (max 560px) auf `80dvh` (max 920px) erhöht; `dvh`
     statt `vh` → passt sich der echten sichtbaren Höhe an (Safari-Leiste,

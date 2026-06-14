@@ -34,7 +34,9 @@ function erstellePopupHtml(d) {
   if (d.wissName) {
     detailZeilen.push(`<p><span class="detail-label">Botanischer Name:</span> <em>${escapeHtml(d.wissName)}</em></p>`);
   }
-  detailZeilen.push(`<p>${escapeHtml(kat.beschreibung)}</p>`);
+  // Art-spezifischer Steckbrief, falls vorhanden — sonst der Kategorie-Text
+  const artInfo = artInfoFuer(d.wissName);
+  detailZeilen.push(`<p>${escapeHtml(artInfo || kat.beschreibung)}</p>`);
   if (d.details) {
     detailZeilen.push(`<p>${escapeHtml(d.details)}</p>`);
   }
